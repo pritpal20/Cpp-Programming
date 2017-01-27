@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1446667744 source:d:\cpp programs\hashtable\main.cpp
+	<iostream>
+
+1485507621 source:d:\cpp programs\hashtable\hashtable.cpp
+	"Hashtable.h"
+
+1485507800 d:\cpp programs\hashtable\hashtable.h
+	<string>
+
