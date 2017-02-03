@@ -1,0 +1,8 @@
+function pointer 
+delete this pointer  -> done 
+auto ptr -> done
+smart pointer
+dangling pointers -> done
+memory leak -> done valgrind --tool=memcheck --leak-check=full
+virtual functions 
+Multithreading
