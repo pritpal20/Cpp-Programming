@@ -2,19 +2,28 @@
 
 using namespace algo;
 
-int main()
+void Print(int A[])
 {
-	int A[] = {10,7,2,1,8,6,3,5,4,1,4,6,9,8};
-	cout << "Hello World \n" ;
+	int arr_size = sizeof(A)/sizeof(*A);
+	cout << "size of array = " << arr_size << endl;
+}
+
+int main(int argc,char* argv[] )
+{
+	int count = 10;
+	if( argc > 1 ) 
+	{ 
+		count = atoi(argv[1]);
+	}
 	
-	int end = sizeof(A)/sizeof(A[1]);
-	for(int i = 0 ; i < end ; i++ )
-		cout << A[i] << " " ;
-	cout << endl;
+	srand(time(NULL));
 	
-	quicksort(A,0,end-1);
+	//int A[10] = {1,2,3,4,5,6,7,8,9,0};
 	
-	for(int i = 0 ; i < end ; i++ )
-		cout << A[i] << " " ;
-	cout << endl;
+	int *A = generateArray(count);
+	
+	printArray(A,count);
+	mergesort(A,count);
+	printArray(A,count);
+	
 }
