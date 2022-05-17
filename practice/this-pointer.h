@@ -9,15 +9,16 @@ class A
 	int x;
   public:
     A() { x = 10;}
-    void fun() {
+    void fun() 
+    {
 		
-	cout << "this pointer b4 delete " << this << endl;
-	cout<<x << endl;
-	 //delete this;
+		cout << "this pointer b4 delete " << this << endl;
+		cout<<x << endl;
+		delete this;
 
-	  /* Invalid: Undefined Behavior */
-	  cout << "this pointer after delete " << this << endl;
-	  cout<<x << endl;
+		/* Invalid: Undefined Behavior */
+		cout << "this pointer after delete " << this << endl;
+		cout<<x << endl;
     }
 	
 };

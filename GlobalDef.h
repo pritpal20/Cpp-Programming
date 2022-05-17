@@ -1,7 +1,7 @@
 #ifndef __GLOBALDEF__
 #define __GLOBALDEF__
 
-#define LOG(x) std::cout << x << std::endl
+#define LOG(x) std::cout << (#x) << " = " <<  x << std::endl
 
 enum ReturnType : unsigned int
 {
