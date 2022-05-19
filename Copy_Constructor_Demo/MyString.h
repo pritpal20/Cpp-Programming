@@ -15,7 +15,7 @@ public:
 	MyString(const char*);
 	MyString(const 	MyString& obj);
 	~MyString();
-	char* get();
+	char* get() const;
 
 	friend std::ostream& operator <<(std::ostream& stream,const MyString& string);
 
@@ -31,7 +31,7 @@ MyString::MyString()
 {
 	std::cout << "My string object constructed \n";
 	m_Buffer = NULL;
-	m_size = 0;
+	(*this).m_size = 0;
 }
 
 MyString::MyString(const char* str_in)
@@ -39,6 +39,8 @@ MyString::MyString(const char* str_in)
 	std::cout << "My string object constructed \n";
 	m_size = strlen(str_in);
 	m_Buffer = new char[m_size + 1];
+
+	memset(m_Buffer,'\0',m_size + 1);
 	memcpy(m_Buffer,str_in,m_size);
 }
 
@@ -49,7 +51,7 @@ MyString::~MyString()
 	delete [] m_Buffer;
 }
 
-char* MyString::get()
+char* MyString::get() const
 {
 	return this->m_Buffer;
 }
@@ -64,7 +66,7 @@ MyString::MyString(const MyString& obj)
 
 std::ostream& operator <<(std::ostream& stream,const MyString& string)
 {
-	stream << string.m_Buffer  ; 
+	stream << string.get()   ; 
 }
 
 char& MyString::operator[] (unsigned int index)
