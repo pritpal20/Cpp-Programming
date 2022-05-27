@@ -12,22 +12,18 @@ public:
 	{
 		std::cout << "Myclass object destroyed \n";
 	}
-
-	void PrintHello()
-	{
-		std::cout << "Hello " << std::endl;
-	}
 	
 };
 
 
 int main(int argc, char const *argv[])
 {
+	
 	{
-		std::unique_ptr<MyClass> obj1( new MyClass("Object 1"));
-		std::unique_ptr<MyClass> obj2  = std::make_unique<MyClass>();
-		obj1->PrintHello();
+		std::shared_ptr<MyClass> p = std::make_shared< MyClass>();
+		
 	}
 
+	
 	return 0;
 }
