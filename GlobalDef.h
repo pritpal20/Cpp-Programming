@@ -5,7 +5,8 @@
 
 #define fo(i,n) for(int i = 0 ; i < n ; i++)
 
-// #define cout std::cout
+#define cout std::cout
+#define endl std::endl
 
 enum ReturnType : unsigned int
 {

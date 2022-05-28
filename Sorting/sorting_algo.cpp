@@ -13,14 +13,14 @@ namespace mysort
 
 	template<size_t N> void print_array(int (&a)[N])
 	{
-		std::cout << "[" ;
+		cout << "[" ;
 		fo(i,N)
 		{
-			std::cout << a[i] ;
+			cout << a[i] ;
 			if (i != N -1)
-				std::cout << ", ";
+				cout << ", ";
 		}
-		std::cout << "]" << std::endl;
+		cout << "]" << endl;
 	}
 
 
@@ -76,20 +76,20 @@ namespace mysort
 		*/
 		for(int i = 1; i < N ; i++)
 		{
-			std::cout << "********iteration " << i << " *************" << std::endl; 
+			cout << "********iteration " << i << " *************" << endl; 
 			print_array(arr);
-			std::cout << "arr[i] =  " <<arr[i] << std::endl ;
+			cout << "arr[i] =  " <<arr[i] << endl ;
 			for(int j = i  ; j >0 ; j--)
 			{
-				std::cout << "i = " << i << " j = " << j << std::endl;
+				cout << "i = " << i << " j = " << j << endl;
 				if (arr[j] < arr[j-1])
 				{
-					std::cout << "swap arr[j] =" << arr[j] << " with arr[j-1] =" << arr[j-1] << std::endl;
+					cout << "swap arr[j] =" << arr[j] << " with arr[j-1] =" << arr[j-1] << endl;
 					swap(arr[j],arr[j-1]);
 				}
 				else
 				{
-					std::cout << "loop exited " << std::endl;
+					cout << "loop exited " << endl;
 					break;	
 				}
 			}
