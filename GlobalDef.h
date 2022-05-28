@@ -3,6 +3,8 @@
 
 #define LOG(x) std::cout << (#x) << " = " <<  x << std::endl
 
+#define fo(i,n) for(int i = 0 ; i < n ; i++)
+
 enum ReturnType : unsigned int
 {
 	SUCCESS = 0,FAIL = 1

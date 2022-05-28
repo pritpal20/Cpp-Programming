@@ -28,8 +28,6 @@ void PrintValue(const Myclass& obj)
 int main(int argc, char const *argv[])
 {
 	Myclass C1(8);
-
 	PrintValue(C1);
-
 	return SUCCESS;
 }
