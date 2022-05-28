@@ -5,6 +5,8 @@
 
 #define fo(i,n) for(int i = 0 ; i < n ; i++)
 
+// #define cout std::cout
+
 enum ReturnType : unsigned int
 {
 	SUCCESS = 0,FAIL = 1

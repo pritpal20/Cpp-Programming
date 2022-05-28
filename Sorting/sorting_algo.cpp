@@ -11,6 +11,18 @@ namespace mysort
 		b = temp;
 	}
 
+	template<size_t N> void print_array(int (&a)[N])
+	{
+		std::cout << "[" ;
+		fo(i,N)
+		{
+			std::cout << a[i] ;
+			if (i != N -1)
+				std::cout << ", ";
+		}
+		std::cout << "]" << std::endl;
+	}
+
 
 	template<size_t N> void bubblesort(int (&arr)[N])
 	{
@@ -44,41 +56,55 @@ namespace mysort
 	{
 		fo(i,N)
 		{
-			int min = arr[i];
-			int idx = i;
+			int min = i;
 			for(int j = i+1; j < N ;j++)
 			{
-				if(min > arr[j])
+				if(arr[min] > arr[j])
 				{
-					min = arr[j];
-					idx = j;
+					min = j;
 				}
 
 			}
-			swap(arr[i],arr[idx]);
+			swap(arr[i],arr[min]);
 		}
 	}
 
-	template<size_t N> void print_array(int (&a)[N])
+	template<size_t N> void insertion_sort(int (&arr)[N])
 	{
-		std::cout << "[" ;
-		fo(i,N)
+		/*
+			https://www.geeksforgeeks.org/insertion-sort/
+		*/
+		for(int i = 1; i < N ; i++)
 		{
-			std::cout << a[i] ;
-			if (i != N -1)
-				std::cout << ", ";
+			std::cout << "********iteration " << i << " *************" << std::endl; 
+			print_array(arr);
+			std::cout << "arr[i] =  " <<arr[i] << std::endl ;
+			for(int j = i  ; j >0 ; j--)
+			{
+				std::cout << "i = " << i << " j = " << j << std::endl;
+				if (arr[j] < arr[j-1])
+				{
+					std::cout << "swap arr[j] =" << arr[j] << " with arr[j-1] =" << arr[j-1] << std::endl;
+					swap(arr[j],arr[j-1]);
+				}
+				else
+				{
+					std::cout << "loop exited " << std::endl;
+					break;	
+				}
+			}
+			print_array(arr);
 		}
-		std::cout << "]" << std::endl;
 	}
-
 }
 
 int main(int argc, char const *argv[])
 {
-	int a[] = {2,3,5,4,1,-1,0,-2,4};
+	// int a[] = {-100,10,2,3,-20,5,4,1,-1,0,-2,4};
+	int a[] = {1,0,2,3,4,5};
 
 	mysort::print_array(a); 
-	mysort::bubblesort(a); 
+	mysort::insertion_sort(a); 
 	mysort::print_array(a); 
 
 	return 0;
