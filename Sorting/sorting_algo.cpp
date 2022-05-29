@@ -57,7 +57,7 @@ namespace mysort
 		fo(i,N)
 		{
 			int min = i;
-			for(int j = i+1; j < N ;j++)
+			fo1(j = i+1,N)
 			{
 				if(arr[min] > arr[j])
 				{
@@ -65,6 +65,7 @@ namespace mysort
 				}
 
 			}
+			// cout << "min " << min << endl;
 			swap(arr[i],arr[min]);
 		}
 	}
@@ -100,11 +101,11 @@ namespace mysort
 
 int main(int argc, char const *argv[])
 {
-	// int a[] = {-100,10,2,3,-20,5,4,1,-1,0,-2,4};
-	int a[] = {1,0,2,3,4,5};
+	int a[] = {-100,10,2,3,-20,5,4,1,-1,0,-2,4};
+	// int a[] = {1,0,2,3,4,5};
 
-	mysort::print_array(a); 
-	mysort::insertion_sort(a); 
+	mysort::print_array(a);
+	mysort::selection_sort(a); 
 	mysort::print_array(a); 
 
 	return 0;
