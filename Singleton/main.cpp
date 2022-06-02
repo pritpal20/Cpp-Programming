@@ -1,5 +1,8 @@
 #include <iostream>
 #include "../GlobalDef.h"
+#include <mutex>
+
+std::mutex mtx1;
 namespace sig
 {
 	class Singleton
@@ -9,14 +12,24 @@ namespace sig
 		int connect = false;
 		Singleton()
 		{	
-			std::cout << "Object created " << std::endl;
+			cout << "Object created " << endl;
 		}
 
 	public:
-
+		
 		static Singleton* get_instance()
 		{
-			static Singleton* obj = new Singleton();
+			static Singleton* obj = NULL;
+
+			if (obj == NULL)
+			{
+				mtx1.lock();
+				if (obj == NULL)
+				{
+					obj = new Singleton();
+				}
+				mtx1.unlock();
+			}
 
 			return obj;
 
@@ -26,7 +39,7 @@ namespace sig
 		{
 			if (connect == false )
 			{
-				std::cout << "Connected to database \n";
+				cout << "Connected to database \n";
 				connect = true;
 			}
 
@@ -35,7 +48,7 @@ namespace sig
 
 		~Singleton()
 		{
-			std::cout <<"Object destroyed \n";
+			cout <<"Object destroyed \n";
 		}
 	};
 
