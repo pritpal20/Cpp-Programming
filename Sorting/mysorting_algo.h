@@ -133,7 +133,7 @@ namespace mergesort
 		return int( N / 2);
 	}
 
-	void split(int* A,int* left,int* right,int N,int &nL,int &nR)
+	void split(ArrayInt A,ArrayInt left,ArrayInt right,int N,int &nL,int &nR)
 	{
 		int mid = middle(N);
 		nL = mid;
@@ -157,7 +157,7 @@ namespace mergesort
 		}
 	}
 
-	void merge(int* A,int* left_arr,int* right_arr,int N ,int nL,int nR)
+	void merge(ArrayInt A,ArrayInt left_arr,ArrayInt right_arr,int N ,int nL,int nR)
 	{
 
 		int i = 0,j = 0,k =0;
@@ -186,7 +186,7 @@ namespace mergesort
 
 	}
 
-	int* mergesort(int* arr,int N)
+	ArrayInt mergesort(ArrayInt arr,int N)
 	{
 
 		if( N == 1)
