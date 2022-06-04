@@ -1,33 +1,29 @@
 #include <iostream>
-#include "../GlobalDef.h"
+#include "..\GlobalDef.h"
+#include <memory>
 
+struct Demo
+{
+	std::string m_Name;
+	int m_Age;
 
-class Myclass
-{	
-private:
-	mutable int m_random_num;
-
-public:
-
-	explicit Myclass(int var ) : m_random_num(var)
+	explicit Demo(const std::string Name,int age):  m_Name(Name),m_Age(age)
 	{
-
+		cout << "object created \n" ;
 	}
-
-	int get() const
+	~Demo()
 	{
-		return ++m_random_num;
+		cout << "object destroyed \n" ;
 	}
 };
 
-void PrintValue(const Myclass& obj)
-{
-	std::cout << obj.get() << std::endl;
-}
-
 int main(int argc, char const *argv[])
 {
-	Myclass C1(8);
-	PrintValue(C1);
-	return SUCCESS;
+
+	//! NO IMPLICIT CONVERSION BCOZ of EXPLICIT keyword before CONSTRUCTOR
+	//! remove explicit keyword and the code should work 
+	Demo d = {"Pritpal",2};
+
+	LOG(d.m_Name);
+	LOG(d.m_Age);
 }
