@@ -34,6 +34,7 @@ MyString::MyString()
 	(*this).m_size = 0;
 }
 
+//Copy Constructor
 MyString::MyString(const char* str_in)
 {
 	std::cout << "My string object constructed \n";

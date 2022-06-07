@@ -19,9 +19,8 @@ struct Demo
 
 int main(int argc, char const *argv[])
 {
-
 	//! NO IMPLICIT CONVERSION BCOZ of EXPLICIT keyword before CONSTRUCTOR
-	//! remove explicit keyword and the code should work 
+	//! remove explicit keyword and the code should work
 	Demo d = {"Pritpal",2};
 
 	LOG(d.m_Name);

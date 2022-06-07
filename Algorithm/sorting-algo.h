@@ -1,5 +1,5 @@
-#ifndef SORTING-ALGO_H
-#define SORTING-ALGO_H
+#ifndef SORTING_ALGO_H
+#define SORTING_ALGO_H
 #include <iostream>
 #include <cstdlib>
 #include <time.h>

@@ -20,6 +20,7 @@ class MyClass
 		friend std::ostream& operator <<(std::ostream& stream,const MyClass& obj)
 		{
 			stream << "a = " << obj.a << ", b = " << obj.b << ", c = " << obj.c << std::endl;
+			return stream;
 		}
 };
 
