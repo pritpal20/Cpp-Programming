@@ -77,3 +77,48 @@ namespace mergesort
 	}
 
 }
+
+
+namespace insertion
+{
+
+	void sort(ArrayInt A,UINT N)
+	{
+		for(int i = 0;i < N ; i++)
+		{
+			for(int j = i +1; j > 0 ; j--)
+			{
+				if( A[j] < A[j-1])
+				{
+					swap(A[j],A[j-1]);
+				}
+				else
+					break;
+			}
+		}
+	}
+
+}
+
+namespace selection
+{
+	void sort(ArrayInt A,UINT N)
+	{
+		fo(i,N-1)
+		{	
+			int min_index = i;
+			for(int j = i+1;j < N ; j++)
+			{
+				if (A[j] < A[min_index])
+				{
+					min_index = j;
+				}
+			}
+			if (i != min_index)
+			{
+				swap(A[i],A[min_index]);
+			}
+		}
+	}
+
+}
