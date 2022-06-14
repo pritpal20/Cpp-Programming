@@ -2,6 +2,7 @@
 #define __GLOBALDEF__
 #include <iostream>
 #include <array>
+#include <vector>
 
 #define fo(i,n) for(UINT i = 0 ; i < n ; i++)
 #define fo1(i,n) for(int j = i ; j < n ; j++)
@@ -61,7 +62,7 @@ void swap(int& a,int& b)
 
 
 template <class T,size_t n>
-void PrintArray(std::array<T,n> arr)
+void PrintArray(const std::array<T,n>& arr)
 {
 	UINT N = arr.size();
 	cout << "[";
@@ -75,6 +76,20 @@ void PrintArray(std::array<T,n> arr)
 	cout << "]" << endl;
 
 	// return nullptr;
+}
+
+template <class T>
+void print(const std::vector<T>& v)
+{
+	UINT N = v.size();
+	cout << "[" ;
+	fo(i,N)
+	{
+		cout << v[i]  ;
+		if (i != N-1) 
+			cout << "," ;
+	}
+	cout << "]\n" ;
 }
 
 #endif
