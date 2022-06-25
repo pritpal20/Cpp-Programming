@@ -33,15 +33,13 @@ typedef unsigned int UINT;
 template<size_t N> void PrintArray(int (&arr)[N])
 {
 
-	cout << "[";
+	cout << "{ ";
 	fo(i,N)
 	{
 
-		cout << arr[i] ;
-		if (i != N-1) 
-			cout << "," ;
+		cout << arr[i]  << " " ;
 	}
-	cout << "]" << endl;
+	cout << "}" << endl;
 }
 
 void PrintArray(int* arr,UINT N)

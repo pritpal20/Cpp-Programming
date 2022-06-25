@@ -127,6 +127,16 @@ namespace mergesort
 		cout << "]" << endl;
 	}
 
+	void print_array(int *a,int start,int end)
+	{
+		cout << "{" ;
+		range(i,start,end+1)
+		{
+			cout << a[i] << " ";
+		}
+		cout << "}" << endl;
+	} 
+
 	int middle(int N )
 	{
 
@@ -212,6 +222,50 @@ namespace mergesort
 		mergesort(L,nL);
 		mergesort(R,nR);
 		merge(arr,L,R,N,nL,nR);
+	}
+}
+//4,1,5,9,7,0,1,3,2 pivot = 8,i = 0
+//1,1,5,9,7,0,2,3,4 pivot = 6,i = 1
+//1,1,5,9,7,0,2,3,4 pivot = 6,i = 2
+//1,1,0,9,7,2,5,3,4 pivot = 5,i = 3
+//1,1,0,7,2,9,5,3,4 pivot = 4,i = 3
+namespace quicksort
+{
+	int partition(int* arr,int left ,int right)
+	{
+		int pivot = right;
+
+		int i = 0;
+		for (i = left; i < right; i++)
+		{
+			cout << "=== start ===" << endl;
+			mergesort::print_array(arr,left,right);
+			LOG(i);
+			LOG(pivot);
+			while(i < pivot && arr[i] > arr[pivot])
+			{
+				mysort::swap(arr[i],arr[pivot]);
+				pivot--;
+				mysort::swap(arr[i],arr[pivot]);	
+			}
+        	mergesort::print_array(arr,left,right);
+        	cout << "=== end ===" << endl;
+			if (pivot <= i)
+            break;
+		}
+		LOG(i);
+		LOG(pivot);
+		cout << "======= " << endl;
+		return pivot;
+	}
+	void quicksort(int* arr,int left,int right)
+	{
+		if (right <= left)
+        	return;
+		int p = partition(arr,left,right);
+
+		quicksort(arr,left,p-1);
+		quicksort(arr,p,right);
 	}
 }
 #endif
