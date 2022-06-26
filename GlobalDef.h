@@ -42,6 +42,18 @@ template<size_t N> void PrintArray(int (&arr)[N])
 	cout << "}" << endl;
 }
 
+template<size_t N> void print_array(int (&a)[N])
+{
+	cout << "[" ;
+	fo(i,N)
+	{
+		cout << a[i] ;
+		if (i != N -1)
+			cout << ", ";
+	}
+	cout << "]" << endl;
+}
+
 void PrintArray(int* arr,UINT N)
 {
 	cout << "[";
@@ -55,10 +67,32 @@ void PrintArray(int* arr,UINT N)
 	cout << "]" << endl;
 }
 
-
-void swap(int& a,int& b)
+void print_array(int *a,int start,int end)
 {
-	int temp = a;
+	cout << "{" ;
+	range(i,start,end+1)
+	{
+		cout << a[i] << " ";
+	}
+	cout << "}" << endl;
+}
+
+void print_array(int *a,int N)
+{
+	cout << "[" ;
+	fo(i,N)
+	{
+		cout << a[i] ;
+		if (i != N -1)
+			cout << ", ";
+	}
+	cout << "]" << endl;
+}
+
+template <class T>
+void swap(T &a,T &b)
+{
+	T temp = a;
 	a = b;
 	b = temp;
 }

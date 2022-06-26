@@ -1,10 +1,35 @@
 #ifndef __MYSORTING_ALGO
 #define __MYSORTING_ALGO
 #include <iostream>
+#include<time.h>
+#include <map>
 #include "../GlobalDef.h"
 
 namespace mysort
 {
+	int* generateUniqueArray(int count)
+	{
+		srand(time(NULL));
+		std::map<int,bool> cache ;
+		int* A = new int[count];
+		for(int i = 0 ; i < count ; i++ )
+		{
+			while(true)
+			{
+				int random_no = rand() % count + 1 ;
+				if (cache.find(random_no) == cache.end() )
+				{
+					A[i] = random_no;
+					cache.insert({random_no,true});
+					break;
+				}
+				else
+					continue;
+			}
+		}
+		return A;
+	}
+	
 	template <class T>
 	void swap(T &a,T &b)
 	{
@@ -12,19 +37,6 @@ namespace mysort
 		a = b;
 		b = temp;
 	}
-
-	template<size_t N> void print_array(int (&a)[N])
-	{
-		cout << "[" ;
-		fo(i,N)
-		{
-			cout << a[i] ;
-			if (i != N -1)
-				cout << ", ";
-		}
-		cout << "]" << endl;
-	}
-
 
 	template<size_t N> void bubblesort(int (&arr)[N])
 	{
@@ -72,70 +84,57 @@ namespace mysort
 		}
 	}
 
-	template<size_t N> void insertion_sort(int (&arr)[N])
+	void insertion_sort(int* arr,int N)
 	{
 		/*
 			https://www.geeksforgeeks.org/insertion-sort/
 		*/
 		for(int i = 1; i < N ; i++)
 		{
-			cout << "********iteration " << i << " *************" << endl; 
-			print_array(arr);
-			cout << "arr[i] =  " <<arr[i] << endl ;
+			
 			for(int j = i  ; j >0 ; j--)
 			{
-				cout << "i = " << i << " j = " << j << endl;
 				if (arr[j] < arr[j-1])
 				{
-					cout << "swap arr[j] =" << arr[j] << " with arr[j-1] =" << arr[j-1] << endl;
 					swap(arr[j],arr[j-1]);
 				}
 				else
 				{
-					cout << "loop exited " << endl;
 					break;	
 				}
 			}
-			print_array(arr);
 		}
 	}
-}
 
-namespace mergesort
-{
-	template<size_t N> void print_array(int (&a)[N])
+	//Quick sort 
+	int partition(int* arr,int left ,int right)
 	{
-		cout << "[" ;
-		fo(i,N)
+		int pivot = right;
+
+		int i = 0;
+		for (i = left; i < right; i++)
 		{
-			cout << a[i] ;
-			if (i != N -1)
-				cout << ", ";
+			while(i < pivot && arr[pivot] < arr[i])
+			{
+				mysort::swap(arr[i],arr[pivot]);
+				pivot--;
+				mysort::swap(arr[i],arr[pivot]);	
+			}
+			if (pivot <= i)
+            break;
 		}
-		cout << "]" << endl;
+		return pivot;
 	}
 
-	void print_array(int *a,int N)
+	void quicksort(int* arr,int left,int right)
 	{
-		cout << "[" ;
-		fo(i,N)
-		{
-			cout << a[i] ;
-			if (i != N -1)
-				cout << ", ";
-		}
-		cout << "]" << endl;
-	}
+		if (right <= left)
+        	return;
+		int p = partition(arr,left,right);
 
-	void print_array(int *a,int start,int end)
-	{
-		cout << "{" ;
-		range(i,start,end+1)
-		{
-			cout << a[i] << " ";
-		}
-		cout << "}" << endl;
-	} 
+		quicksort(arr,left,p-1);
+		quicksort(arr,p,right);
+	}
 
 	int middle(int N )
 	{
@@ -151,11 +150,10 @@ namespace mergesort
 		left = new int[nL];
 		right = new int[nR];
 		int k = 0;
-		// cout << "nL = " << nL << endl;
+
 		fo(i,nL)
 		{
 			*left= A[k];
-			// cout << "*L " << *left << endl;
 			k++;
 			left++;
 		}
@@ -224,48 +222,5 @@ namespace mergesort
 		merge(arr,L,R,N,nL,nR);
 	}
 }
-//4,1,5,9,7,0,1,3,2 pivot = 8,i = 0
-//1,1,5,9,7,0,2,3,4 pivot = 6,i = 1
-//1,1,5,9,7,0,2,3,4 pivot = 6,i = 2
-//1,1,0,9,7,2,5,3,4 pivot = 5,i = 3
-//1,1,0,7,2,9,5,3,4 pivot = 4,i = 3
-namespace quicksort
-{
-	int partition(int* arr,int left ,int right)
-	{
-		int pivot = right;
 
-		int i = 0;
-		for (i = left; i < right; i++)
-		{
-			cout << "=== start ===" << endl;
-			mergesort::print_array(arr,left,right);
-			LOG(i);
-			LOG(pivot);
-			while(i < pivot && arr[i] > arr[pivot])
-			{
-				mysort::swap(arr[i],arr[pivot]);
-				pivot--;
-				mysort::swap(arr[i],arr[pivot]);	
-			}
-        	mergesort::print_array(arr,left,right);
-        	cout << "=== end ===" << endl;
-			if (pivot <= i)
-            break;
-		}
-		LOG(i);
-		LOG(pivot);
-		cout << "======= " << endl;
-		return pivot;
-	}
-	void quicksort(int* arr,int left,int right)
-	{
-		if (right <= left)
-        	return;
-		int p = partition(arr,left,right);
-
-		quicksort(arr,left,p-1);
-		quicksort(arr,p,right);
-	}
-}
 #endif
