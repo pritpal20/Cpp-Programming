@@ -7,7 +7,7 @@
 
 namespace mysort
 {
-	int* generateUniqueArray(int count)
+	int* generateUniqueNumbersArray(int count)
 	{
 		srand(time(NULL));
 		std::map<int,bool> cache ;
@@ -38,7 +38,7 @@ namespace mysort
 		b = temp;
 	}
 
-	template<size_t N> void bubblesort(int (&arr)[N])
+	void bubblesort(int* arr,int N)
 	{
 		/*
 		compares the first two element if the first element is greater than second 
@@ -66,7 +66,7 @@ namespace mysort
 		}	
 	}
 
-	template<size_t N> void selection_sort(int (&arr)[N])
+	void selection_sort(int* arr,int N)
 	{
 		fo(i,N)
 		{
@@ -79,7 +79,6 @@ namespace mysort
 				}
 
 			}
-			// cout << "min " << min << endl;
 			swap(arr[i],arr[min]);
 		}
 	}
