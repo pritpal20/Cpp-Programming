@@ -1,0 +1,138 @@
+1. What is the difference between parallel and concurrent processing?
+
+Concurrency : 
+
+Concurrency means executing multiple tasks at the same time but not necessarily simultaneously.Concurrency create an illusion of parallelism however multiple task is not executed parallely.Concurrency is achieved through context switching.
+
+A system is said to be concurrent if it can support two or more actions
+in progress at the same time.
+
+A system is said to be parallel if it can support two or more actions executing simultaneously.
+
+Concurrency is about dealing with lot of things at once.
+
+Parallelism is about doing lot of things at the same time.
+
+An application can be concurrent — but not parallel, which means that it processes more than one task at the same time, but no two tasks are executing at the same time instant.
+
+An application can be parallel — but not concurrent, which means that it processes multiple sub-tasks of a task in multi-core CPU at the same time.
+
+An application can be neither parallel — nor concurrent, which means that it processes all tasks one at a time, sequentially.
+
+An application can be both parallel — and concurrent, which means that it processes multiple tasks concurrently in multi-core CPU at the same time.
+
+===========================================================================
+2. What are some of the C++ semantics for parallel processing and for concurrent processing? Please cover elements of the C++11 memory model.
+
+Some of semantices for parallel processing are : 
+
+Threads: 
+Invoke a thread - 
+std::thread my_thread(somefunc);
+
+Thread join - 
+	if(my_thread.is_joinable())
+		my_thread.join()
+
+Make a thread dettachable : 
+
+	my_thread.detach()
+
+Shared Data : 
+
+Mutexes and locks : 
+
+Thread safe initialization : 
+
+Thread local Data : 
+
+Conditional variable : 
+
+Task : 
+
+-----------------------
+
+The Memory model : 
+
+Different threads trying to access the same memory location participate in a data race if at least one of the operations is a modification (also known as store operation). These data races cause undefined behavior. To avoid them one needs to prevent these threads from concurrently executing such conflicting operations.
+
+Synchronization primitives (mutex, critical section and the like) can guard such accesses. The Memory Model introduced in C++11 defines two new portable ways to synchronize access to memory in multi-threaded environment: atomic operations and fences.
+
+Atomics Operation :
+
+It is now possible to read and write to given memory location by the use of atomic load and atomic store operations. For convenience these are wrapped in the std::atomic<t> template class. This class wraps a value of type t but this time loads and stores to the object are atomic.
+
+The template is not available for all types. Which types are available is implementation specific, but this usually includes most (or all) available integral types as well as pointer types. So that std::atomic<unsigned> and std::atomic<std::vector<foo> *> should be available, while std::atomic<std::pair<bool,char>> most probably wont be.
+
+Atomic operations have the following properties:
+
+- All atomic operations can be performed concurrently from multiple threads without causing undefined behavior.
+
+- An atomic load will see either the initial value which the atomic object was constructed with, or the value written to it via some atomic store operation.
+
+- Atomic stores to the same atomic object are ordered the same in all threads. If a thread has already seen the value of some atomic store operation, subsequent atomic load operations will see either the same value, or the value stored by subsequent atomic store operation.
+
+- Atomic read-modify-write operations allow atomic load and atomic store to happen without other atomic store in between. For example one can atomically increment a counter from multiple threads, and no increment will be lost regardless of the contention between the threads.
+
+Atomic operations receive an optional std::memory_order parameter which defines what additional properties the operation has regarding other memory locations. 
+
+Sequential Consistency : 
+
+If no memory order is specified for an atomic operation, the order defaults to sequential consistency. This mode can also be explicitly selected by tagging the operation with std::memory_order_seq_cst.
+
+With this order no memory operation can cross the atomic operation. All memory operations sequenced before the atomic operation happen before the atomic operation and the atomic operation happens before all memory operations that are sequenced after it. This mode is probably the easiest one to reason about but it also leads to the greatest penalty to performance. It also prevents all compiler optimizations that might otherwise try to reorder operations past the atomic operation.
+
+Relaxed Ordering : 
+
+The opposite to sequential consistency is the relaxed memory ordering. It is selected with the std::memory_order_relaxed tag. Relaxed atomic operation will impose no restrictions on other memory operations. The only effect that remains, is that the operation is itself still atomic.
+
+Release-Acquire Ordering : 
+
+An atomic store operation can be tagged with std::memory_order_release and an atomic load operation can be tagged with std::memory_order_acquire. The first operation is called (atomic) store-release while the second is called (atomic) load-acquire.
+
+When load-acquire sees the value written by a store-release the following happens: all store operations sequenced before the store-release become visible to (happen before) load operations that are sequenced after the load-acquire.
+
+Atomic read-modify-write operations can also receive the cumulative tag std::memory_order_acq_rel. This makes the atomic load portion of the operation an atomic load-acquire while the atomic store portion becomes atomic store-release.
+
+The compiler is not allowed to move store operations after an atomic store-release operation. It is also not allowed to move load operations before atomic load-acquire (or load-consume).
+
+Also note that there is no atomic load-release or atomic store-acquire. Attempting to create such operations makes them relaxed operations.
+
+Release-Consume Ordering : 
+
+This combination is similar to release-acquire, but this time the atomic load is tagged with std::memory_order_consume and becomes (atomic) load-consume operation. This mode is the same as release-acquire with the only difference that among the load operations sequenced after the load-consume only these depending on the value loaded by the load-consume are ordered.
+
+
+==============================================================================
+3. What is false sharing? How do you avoid it? How is it an issue in concurrent processing?
+
+False sharing and its effect in multithreaded application: 
+
+False sharing is a performance-degrading usage pattern that can arise in systems with distributed, coherent caches at the size of the smallest resource block managed by the caching mechanism. When a system participant attempts to periodically access data that is not being altered by another party, but that data shares a cache block with data that is being altered, the caching protocol may force the first participant to reload the whole cache block despite a lack of logical necessity.The caching system is unaware of activity within this block and forces the first participant to bear the caching system overhead required by true shared access of a resource.
+
+Ways to avoid False sharing :
+
+One solution to avoid false sharing is to structure the data (adding padding between the data variables ) so that data items that are to be accessed by separating threads are far away from each other in cache-line-sized blocks, and the data items more likely to be stored in separate cache lines. As a result, the data process and cache lines access are all independent, and true multi-threading can be achieved.
+
+It is also possible to reduce the frequency of false sharing by using thread-local copies of data. The thread-local copy can be read and modified frequently and only when complete, copy the result back to the data structure.
+
+==============================================================================
+4. What is a race condition?
+
+When two or more concurrent threads in execution access a shared resource in a way that it unintentionally produces different results depending on the timing of the threads or processes, this gives rise to a Race Condition.
+
+A race condition occurs when two or more threads can access shared data and they try to change it at the same time. Because the thread scheduling algorithm can swap between threads at any time, you don't know the order in which the threads will attempt to access the shared data. Therefore, the result of the change in data is dependent on the thread scheduling algorithm.
+
+===============================================================================
+5. What is thread affinity? Can we improve performance by managing thread affinity?
+
+Thread affinity : 
+
+Thread affinity can be used to force your application threads to run on a particular CPU core or set of CPUs. By doing so, you can eliminate threads migration during the operating system scheduling process.
+
+The performance of an application in thread affinity can be largerly predicted by the type of workload the thread is performing.
+
+If a workload requires parallel execution of independent task which can be run 
+on different cpu cores then the thread affinity can reduce the performance of the thread by attaching the thread to a single or group of CPUs .
+
+If a workload doesnt shared the data with other thread and requires sequential processing then the thread affinity can improve the performance by eliminating the process switch between different CPU cores.
