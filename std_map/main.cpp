@@ -22,7 +22,8 @@ int main(int argc, char const *argv[])
 	{
 		p.first = arr[i];
 		p.second = str_arr[i];
-		m1.insert(p);
+		// m1.insert(p);
+		m1.insert({arr[i],str_arr[i]});
 
 	}
 

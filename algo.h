@@ -1,124 +1,44 @@
 #include "GlobalDef.h"
 #include <memory>
 
-namespace mergesort
+void reverse(std::string& in_str)
 {
+	int N = in_str.length() - 1;
 
-	void merge(ArrayInt A,ArrayInt left,ArrayInt right,UINT n,UINT nL,UINT nR)
+	for(int i = 0,j = N ; i < j ;i++,j--)
 	{
-
-		UINT i = 0,j =0;
-		UINT k = 0;
-
-		while( i < nL && j < nR )
-		{
-			if( left[i] <= right[j])
-			{
-				A[k++] = left[i++];
-			}
-			else
-				A[k++] = right[j++];
-
-		}
-
-		while( i < nL)
-		{
-			A[k++] = left[i++];
-		}
-
-		while( j < nR)
-		{
-			A[k++] = right[j++];
-		}
-
+		swap(in_str[i],in_str[j]);
 	}
-
-	UINT middle(UINT N)
-	{
-		return int (N / 2);
-	}
-
-	void split(ArrayInt A,ArrayInt left,ArrayInt right,UINT nL,UINT nR)
-	{
-		int k = 0;
-
-		fo(i,nL)
-		{
-			left[i] = A[k++];
-		}
-
-		fo(i,nR)
-		{
-			right[i] = A[k++];
-		}
-
-	}
-
-	ArrayInt merge_sort(int* A,UINT N)
-	{
-		if( N == 1 )
-			return A;
-
-		UINT mid = middle(N);
-
-		UINT nL = mid;
-		UINT nR = N - mid;
-
-		int left[nL];
-		int right[nR];
-		split(A,left,right,nL,nR);
-
-		merge_sort(left,nL);
-		merge_sort(right,nR);
-
-		merge(A,left,right,N,nL,nR);
-
-		return A;
-	}
-
 }
 
-
-namespace insertion
+bool IsPalindrome(std::string in_str)
 {
+	std::string temp = in_str;
 
-	void sort(ArrayInt A,UINT N)
+	reverse(temp);
+
+	if( !strcmp(temp.c_str(),in_str.c_str()) )
 	{
-		for(int i = 0;i < N ; i++)
-		{
-			for(int j = i +1; j > 0 ; j--)
-			{
-				if( A[j] < A[j-1])
-				{
-					swap(A[j],A[j-1]);
-				}
-				else
-					break;
-			}
-		}
+		return true;
 	}
 
+	return false;
 }
 
-namespace selection
+namespace fib
 {
-	void sort(ArrayInt A,UINT N)
-	{
-		fo(i,N-1)
-		{	
-			int min_index = i;
-			for(int j = i+1;j < N ; j++)
-			{
-				if (A[j] < A[min_index])
-				{
-					min_index = j;
-				}
-			}
-			if (i != min_index)
-			{
-				swap(A[i],A[min_index]);
-			}
-		}
-	}
+	long long look_up[90]{0};
 
+	long long fibonacci(int n )
+	{
+		if(n <= 1)
+			return n;
+
+		if (look_up[n] != 0)
+			return look_up[n];
+
+		look_up[n] = ( fibonacci(n-1) + fibonacci(n-2) );
+
+		return look_up[n];
+	}
 }

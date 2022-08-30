@@ -1,6 +1,7 @@
 #include <map>
 #include <memory>
 #include <iostream>
+#include <mutex>
 
 using namespace std;
 template <typename T,typename Key>
@@ -16,6 +17,9 @@ public :
 
 		if( const auto it = instances.find(key);it != instances.end() )
 				return it->second;
+
+		static std::mutex lk;
+		std::lock_guard lock(lk);
 
 		auto instance = make_shared<T>();
 		instances[key] = instance;

@@ -5,6 +5,8 @@
 #include <vector>
 #include <list>
 #include <deque>
+#include <map>
+#include <cstring>
 
 
 typedef std::list<std::string> :: iterator listiterator;
@@ -28,6 +30,42 @@ enum ReturnType : int
 typedef int* ArrayInt;
 
 typedef unsigned int UINT;
+
+int* generateUniqueNumbersArray(int count)
+{
+	srand(time(NULL));
+	std::map<int,bool> cache ;
+	int* A = new int[count];
+	for(int i = 0 ; i < count ; i++ )
+	{
+		while(true)
+		{
+			int random_no = rand() % count + 1 ;
+			if (cache.find(random_no) == cache.end() )
+			{
+				A[i] = random_no;
+				cache.insert({random_no,true});
+				break;
+			}
+			else
+				continue;
+		}
+	}
+	return A;
+}
+
+int* generateArray(int count)
+{
+	srand(time(NULL));
+	int* A = new int[count];
+	
+	for(int i = 0 ; i < count ; i++ )
+	{
+		int random_no = rand() % count + 1 ;
+		A[i] = random_no;
+	}
+	return A;
+}
 
 
 template<size_t N> void PrintArray(int (&arr)[N])
