@@ -34,7 +34,7 @@ int main(int argc, char const *argv[])
 
 	Print(100,even);
 
-	// std::thread t1(Print,100,asc);
+	// std::thread t1(Print,100,even);
 	//t1.join();
 	return 0;
 }
