@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
 
 	};
 
-	Print(100,asc);
+	Print(100,even);
 
 	// std::thread t1(Print,100,asc);
 	//t1.join();
