@@ -6,12 +6,12 @@ using namespace std;
 /* 
 !!! Prints even or odd number in the range(count) 
 */
-template <typename OrderBy>
-void Print(int count,OrderBy order)
+template <typename EvenOrOdd>
+void Print(int count,EvenOrOdd args)
 {
 	for (int i = 0; i < count; ++i)
 	{
-		if(order(i))
+		if(args(i))
 			printf("thread : [%d] count : [%d] \n",std::this_thread::get_id(),i);
 	}
 	return;
@@ -20,12 +20,21 @@ void Print(int count,OrderBy order)
 
 int main(int argc, char const *argv[])
 {
-	auto asc = [](int x ){
+	auto even = [](int x ){
 
 		return x % 2 == 0 ? true : false;
 
 	};
 
+	auto odd = [](int x ){
+
+		return x % 2 == 0 ? false : true;
+
+	};
+
 	Print(100,asc);
+
+	// std::thread t1(Print,100,asc);
+	//t1.join();
 	return 0;
 }
